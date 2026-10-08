@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>NEEL · Aesthetic Doodle & Timepass Lounge</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Caveat & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --bg-warm: #F8F5EE;
+      --paper-cream: #FCFAF7;
+      --paper-border: #E8E2D6;
+      --ink-charcoal: #252220;
+      --accent-terracotta: #C8644A;
+      --accent-matcha: #527351;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-warm);
+      color: var(--ink-charcoal);
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+    }
+
+    .font-handwriting {
+      font-family: 'Caveat', cursive, sans-serif;
+    }
+
+    /* Custom Sleek Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.02);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #D8D0C2;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #BDB3A1;
+    }
+
+    /* Sketchbook Paper Patterns */
+    .paper-pattern-dots {
+      background-image: radial-gradient(#CFBEA7 1.3px, transparent 1.3px);
+      background-size: 22px 22px;
+    }
+
+    .paper-pattern-lines {
+      background-image: linear-gradient(#E8DFD3 1px, transparent 1px);
+      background-size: 100% 28px;
+    }
+
+    .paper-pattern-grid {
+      background-image: 
+        linear-gradient(to right, #EBE1D5 1px, transparent 1px),
+        linear-gradient(to bottom, #EBE1D5 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    .shadow-paper {
+      box-shadow: 0 14px 40px -10px rgba(45, 38, 30, 0.09), 0 0 1px 1px rgba(45, 38, 30, 0.04);
+    }
+    .shadow-floating {
+      box-shadow: 0 16px 36px -8px rgba(37, 34, 32, 0.14), 0 4px 14px rgba(37, 34, 32, 0.06);
+    }
+
+    /* Bubble Wrap Fidget styling */
+    .bubble-btn {
+      transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .bubble-btn.popped {
+      transform: scale(0.88);
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.15);
+      background: #DDD5C7 !important;
+    }
+
+    /* Mindful Breathing Cycle Animation */
+    @keyframes breathCycle {
+      0%, 100% { transform: scale(0.85); opacity: 0.7; }
+      40% { transform: scale(1.35); opacity: 1; }
+      60% { transform: scale(1.35); opacity: 1; }
+    }
+    .animate-breath {
+      animation: breathCycle 12s ease-in-out infinite;
+    }
+
+    /* Beating Heart Animation */
+    @keyframes pulseHeart {
+      0%, 100% { transform: scale(1); }
+      14% { transform: scale(1.28); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.22); }
+      70% { transform: scale(1); }
+    }
+    .animate-heartbeat {
+      display: inline-block;
+      animation: pulseHeart 1.8s ease-in-out infinite;
+      transform-origin: center center;
+    }
+  </style>
+</head>
+<body class="h-screen w-screen overflow-hidden flex flex-col antialiased">
+
+  <!-- Top Navigation & Brand Header -->
+  <header class="h-14 border-b border-[#E8E1D5] bg-[#FAF8F3]/95 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between shrink-0 z-30">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-xl bg-[#252220] text-white flex items-center justify-center shadow-sm">
+        <i data-lucide="feather" class="w-4 h-4 text-[#F7F4EE]"></i>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="font-extrabold text-base tracking-wider text-[#252220]">NEEL</span>
+        <span class="text-[11px] font-semibold tracking-wide px-2.5 py-0.5 rounded-full bg-[#EFE9DF] text-[#C8644A] border border-[#E2DBD0]">@neelxz</span>
+      </div>
+      <span class="hidden md:inline text-xs text-[#8F8576] ml-2">Studio Sketchbook</span>
+    </div>
+
+    <!-- Right Header Controls -->
+    <div class="flex items-center gap-2">
+      <!-- Master Sound Toggle -->
+      <button id="toggle-audio-btn" title="Toggle Sound (Mute/Unmute)" class="px-3 py-1.5 rounded-xl text-[#6D6558] hover:text-[#252220] hover:bg-[#EFE9DF] transition-all flex items-center gap-1.5 text-xs font-medium border border-transparent hover:border-[#E0D8CB]">
+        <i id="audio-icon" data-lucide="volume-2" class="w-4 h-4"></i>
+        <span class="hidden sm:inline" id="audio-label">Sound On</span>
+      </button>
+
+      <!-- Toggle Timepass Lounge Drawer -->
+      <button id="toggle-sidebar-btn" class="px-3 py-1.5 rounded-xl text-[#252220] bg-[#EFE9DF] hover:bg-[#E5DFD4] transition-all flex items-center gap-2 text-xs font-semibold border border-[#DDD5C7] shadow-sm">
+        <i data-lucide="sparkles" class="w-4 h-4 text-[#C8644A]"></i>
+        <span>Timepass Lounge</span>
+        <span class="w-2 h-2 rounded-full bg-[#C8644A]"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Workspace -->
+  <div class="flex-1 flex overflow-hidden relative">
+
+    <!-- Canvas Drawing Viewport -->
+    <main class="flex-1 relative flex flex-col items-center justify-center p-2 sm:p-5 md:p-6 overflow-hidden bg-[#F2EDE4]">
+      
+      <!-- Paper Sketchpad Frame -->
+      <div id="paper-container" class="relative w-full h-full max-w-[1400px] max-h-[92vh] bg-[#FCFAF7] rounded-2xl md:rounded-3xl shadow-paper border border-[#E8E2D6] flex items-center justify-center overflow-hidden transition-all duration-300">
+        
+        <!-- Sketchbook Paper Texture -->
+        <div id="paper-texture-layer" class="absolute inset-0 pointer-events-none paper-pattern-dots opacity-75"></div>
+
+        <!-- The Drawing Canvas -->
+        <canvas id="doodleCanvas" class="absolute inset-0 w-full h-full cursor-crosshair touch-none"></canvas>
+
+        <!-- Subtle Top-Left Sketchbook Title Accent -->
+        <div class="absolute top-4 left-5 text-[11px] font-mono tracking-widest text-[#B5ACA0] pointer-events-none select-none uppercase">
+          Sketch Plate Nº 01 · <span class="font-handwriting text-base font-bold text-[#7E7467]">Handmade Ink</span>
+        </div>
+      </div>
+
+      <!-- Floating Aesthetic Toolbar -->
+      <div class="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-20 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 px-3 py-2 sm:px-4 sm:py-2.5 rounded-2xl bg-[#FCFAF7]/95 backdrop-blur-xl border border-[#E2DBD0] shadow-floating max-w-[96vw] transition-all duration-300">
+        
+        <!-- Swatch Colors Palette -->
+        <div class="flex items-center gap-1.5 sm:gap-2 pr-2 border-r border-[#E5DFD4]">
+          <button data-color="#252220" title="Charcoal Ink" class="swatch-btn w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#252220] ring-2 ring-offset-2 ring-[#252220] transition-transform active:scale-95"></button>
+          <button data-color="#C8644A" title="Terracotta" class="swatch-btn w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#C8644A] ring-offset-2 hover:scale-105 transition-transform active:scale-95"></button>
+          <button data-color="#527351" title="Matcha Green" class="swatch-btn w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#527351] ring-offset-2 hover:scale-105 transition-transform active:scale-95"></button>
+          <button data-color="#847BA2" title="Lavender Mist" class="swatch-btn w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#847BA2] ring-offset-2 hover:scale-105 transition-transform active:scale-95"></button>
+          <button data-color="#C57585" title="Dusty Rose" class="swatch-btn w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#C57585] ring-offset-2 hover:scale-105 transition-transform active:scale-95"></button>
+          <button data-color="#4B7E8F" title="Muted Cyan" class="swatch-btn w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#4B7E8F] ring-offset-2 hover:scale-105 transition-transform active:scale-95 hidden sm:inline-block"></button>
+          <button data-color="#C9943B" title="Golden Ochre" class="swatch-btn w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#C9943B] ring-offset-2 hover:scale-105 transition-transform active:scale-95 hidden sm:inline-block"></button>
+
+          <!-- Custom Color Picker -->
+          <div class="relative flex items-center justify-center">
+            <input type="color" id="customColorPicker" value="#252220" class="opacity-0 absolute inset-0 w-full h-full cursor-pointer">
+            <div id="customColorThumb" title="Custom Shade" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-dashed border-[#8E8576] flex items-center justify-center bg-white hover:border-[#252220] transition-colors">
+              <i data-lucide="palette" class="w-3.5 h-3.5 text-[#6D6558]"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tool Selection -->
+        <div class="flex items-center gap-1 pr-2 border-r border-[#E5DFD4]">
+          <button id="tool-pen" title="Fine Ink Pen" class="tool-btn active p-2 rounded-xl bg-[#252220] text-white transition-all">
+            <i data-lucide="pen-tool" class="w-4 h-4"></i>
+          </button>
+          <button id="tool-highlighter" title="Soft Highlighter" class="tool-btn p-2 rounded-xl text-[#6D6558] hover:bg-[#EFE9DF] transition-all">
+            <i data-lucide="highlighter" class="w-4 h-4"></i>
+          </button>
+          <button id="tool-eraser" title="Precision Eraser" class="tool-btn p-2 rounded-xl text-[#6D6558] hover:bg-[#EFE9DF] transition-all">
+            <i data-lucide="eraser" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <!-- Stroke Width Control -->
+        <div class="flex items-center gap-2 pr-2 border-r border-[#E5DFD4] px-1">
+          <div class="w-5 h-5 flex items-center justify-center">
+            <div id="brush-size-preview" class="rounded-full bg-[#252220]" style="width: 4px; height: 4px;"></div>
+          </div>
+          <input type="range" id="brushSize" min="2" max="40" value="4" class="w-14 sm:w-20 h-1.5 bg-[#E2DBD0] rounded-lg appearance-none cursor-pointer accent-[#252220]">
+        </div>
+
+        <!-- Paper Texture Dropdown -->
+        <div class="relative group">
+          <button id="paper-texture-toggle" title="Paper Style" class="p-2 rounded-xl text-[#6D6558] hover:bg-[#EFE9DF] transition-all flex items-center gap-1">
+            <i data-lucide="layers" class="w-4 h-4"></i>
+          </button>
+          <div id="paper-dropdown" class="hidden absolute bottom-12 left-1/2 -translate-x-1/2 bg-[#FCFAF7] border border-[#E2DBD0] rounded-xl shadow-xl p-1.5 flex flex-col gap-1 w-32 z-30">
+            <button data-texture="dots" class="paper-opt-btn active text-left text-xs px-2.5 py-1.5 rounded-lg hover:bg-[#EFE9DF] font-medium text-[#252220]">Dotted Paper</button>
+            <button data-texture="lines" class="paper-opt-btn text-left text-xs px-2.5 py-1.5 rounded-lg hover:bg-[#EFE9DF] font-medium text-[#686053]">Lined Sheet</button>
+            <button data-texture="grid" class="paper-opt-btn text-left text-xs px-2.5 py-1.5 rounded-lg hover:bg-[#EFE9DF] font-medium text-[#686053]">Square Grid</button>
+            <button data-texture="blank" class="paper-opt-btn text-left text-xs px-2.5 py-1.5 rounded-lg hover:bg-[#EFE9DF] font-medium text-[#686053]">Pure Blank</button>
+          </div>
+        </div>
+
+        <!-- Undo & Redo -->
+        <div class="flex items-center gap-0.5 pr-2 border-r border-[#E5DFD4]">
+          <button id="undo-btn" title="Undo (Ctrl+Z)" class="p-2 rounded-xl text-[#6D6558] hover:text-[#252220] hover:bg-[#EFE9DF] disabled:opacity-30 disabled:hover:bg-transparent transition-all">
+            <i data-lucide="undo-2" class="w-4 h-4"></i>
+          </button>
+          <button id="redo-btn" title="Redo (Ctrl+Y)" class="p-2 rounded-xl text-[#6D6558] hover:text-[#252220] hover:bg-[#EFE9DF] disabled:opacity-30 disabled:hover:bg-transparent transition-all">
+            <i data-lucide="redo-2" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <!-- Signature, Clear & Export Buttons -->
+        <div class="flex items-center gap-1">
+          <!-- Restore @neelxz handwriting watermark -->
+          <button id="restore-signature-btn" title="Write '@neelxz' again" class="p-2 rounded-xl text-[#6D6558] hover:text-[#C8644A] hover:bg-[#EFE9DF] transition-all flex items-center gap-1 font-semibold text-xs">
+            <i data-lucide="signature" class="w-4 h-4"></i>
+            <span class="hidden sm:inline">Write @neelxz</span>
+          </button>
+          <!-- Clear Canvas -->
+          <button id="clear-canvas-btn" title="Clear Canvas" class="p-2 rounded-xl text-[#6D6558] hover:text-red-700 hover:bg-red-50 transition-all">
+            <i data-lucide="trash-2" class="w-4 h-4"></i>
+          </button>
+          <!-- Export / Download -->
+          <button id="download-btn" title="Export Artwork" class="p-2 rounded-xl bg-[#252220] text-[#FCFAF7] hover:bg-[#3E3A37] transition-all flex items-center gap-1">
+            <i data-lucide="download" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Side Interactive Timepass Lounge with custom scrollbar -->
+    <aside id="zen-sidebar" class="w-full sm:w-80 md:w-88 xl:w-96 bg-[#F8F5EE] border-l border-[#E5DFD4] flex flex-col shrink-0 z-30 transition-all duration-300 absolute inset-y-0 right-0 sm:relative translate-x-full sm:translate-x-0 shadow-2xl sm:shadow-none">
+      
+      <!-- Lounge Header -->
+      <div class="p-4 border-b border-[#E5DFD4] bg-[#FAF8F3] flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-lg bg-[#EAE3D6] flex items-center justify-center text-[#C8644A]">
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h2 class="text-sm font-bold text-[#252220] tracking-tight">Timepass & Fidget</h2>
+            <p class="text-[11px] text-[#8C8375]">Mindful toys & sensory feedback</p>
+          </div>
+        </div>
+        <button id="close-sidebar-btn" class="sm:hidden p-1.5 rounded-lg hover:bg-[#EAE3D6] text-[#6D6558]">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Scrollable Activities List with Custom Scrollbar -->
+      <div class="flex-1 overflow-y-auto p-4 space-y-4">
+
+        <!-- Activity 1: Zen Water Ripple Pond -->
+        <section class="bg-[#FCFAF7] rounded-2xl p-4 border border-[#E8E2D6] shadow-sm">
+          <div class="flex items-center justify-between mb-1.5">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#4B7E8F]"></span>
+              <h3 class="text-xs font-semibold uppercase tracking-wider text-[#756C5E]">Zen Water Pond</h3>
+            </div>
+            <span class="text-[10px] text-[#9A9183] font-mono">Touch to Ripple</span>
+          </div>
+          <p class="text-[11px] text-[#8C8375] mb-2.5">Drop pebbles into tranquil water ripples</p>
+          <div class="relative w-full h-28 rounded-xl overflow-hidden border border-[#D5DFE3] bg-[#E8F0F3] shadow-inner">
+            <canvas id="rippleCanvas" class="w-full h-full cursor-pointer touch-none"></canvas>
+            <div class="absolute bottom-1.5 right-2 text-[9px] font-mono text-[#6E8790] pointer-events-none">
+              Wave Physics Engine
+            </div>
+          </div>
+        </section>
+
+        <!-- Activity 2: ASMR Mechanical Switches -->
+        <section class="bg-[#FCFAF7] rounded-2xl p-4 border border-[#E8E2D6] shadow-sm">
+          <div class="flex items-center justify-between mb-1.5">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#C8644A]"></span>
+              <h3 class="text-xs font-semibold uppercase tracking-wider text-[#756C5E]">Mechanical Switches</h3>
+            </div>
+            <span id="clicks-counter" class="text-[10px] text-[#9A9183] font-mono">0 clacks</span>
+          </div>
+          <p class="text-[11px] text-[#8C8375] mb-2.5">Tactile keyboard switch sound profiles</p>
+          <div class="grid grid-cols-3 gap-2">
+            <button data-switch="blue" class="mech-switch-btn group flex flex-col items-center justify-center p-2 rounded-xl bg-white border border-[#DCD5C8] border-b-4 border-b-[#3B82F6] active:border-b active:translate-y-1 shadow-sm transition-all hover:bg-blue-50/50">
+              <div class="w-3.5 h-3.5 rounded-sm bg-blue-500 mb-1 group-active:scale-95 transition-transform"></div>
+              <span class="text-[11px] font-bold text-[#252220]">Blue</span>
+              <span class="text-[9px] text-[#8C8375] font-mono">Clicky</span>
+            </button>
+            <button data-switch="red" class="mech-switch-btn group flex flex-col items-center justify-center p-2 rounded-xl bg-white border border-[#DCD5C8] border-b-4 border-b-[#EF4444] active:border-b active:translate-y-1 shadow-sm transition-all hover:bg-red-50/50">
+              <div class="w-3.5 h-3.5 rounded-sm bg-red-500 mb-1 group-active:scale-95 transition-transform"></div>
+              <span class="text-[11px] font-bold text-[#252220]">Red</span>
+              <span class="text-[9px] text-[#8C8375] font-mono">Linear</span>
+            </button>
+            <button data-switch="thock" class="mech-switch-btn group flex flex-col items-center justify-center p-2 rounded-xl bg-white border border-[#DCD5C8] border-b-4 border-b-[#D97706] active:border-b active:translate-y-1 shadow-sm transition-all hover:bg-amber-50/50">
+              <div class="w-3.5 h-3.5 rounded-sm bg-amber-400 mb-1 group-active:scale-95 transition-transform"></div>
+              <span class="text-[11px] font-bold text-[#252220]">Cream</span>
+              <span class="text-[9px] text-[#8C8375] font-mono">Thock</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- Activity 3: Poppable Bubble Wrap -->
+        <section class="bg-[#FCFAF7] rounded-2xl p-4 border border-[#E8E2D6] shadow-sm">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#527351]"></span>
+              <h3 class="text-xs font-semibold uppercase tracking-wider text-[#756C5E]">Bubble Wrap</h3>
+            </div>
+            <div class="flex items-center gap-2 text-xs">
+              <span class="text-[#8C8375] font-mono"><span id="bubble-count">0</span> popped</span>
+              <button id="reset-bubbles-btn" class="text-[11px] text-[#C8644A] hover:underline font-semibold">Reset</button>
+            </div>
+          </div>
+          <div id="bubble-wrap-grid" class="grid grid-cols-5 gap-2 select-none">
+            <!-- 20 Bubbles generated dynamically in JS -->
+          </div>
+        </section>
+
+        <!-- Activity 4: Zen Kalimba Keys -->
+        <section class="bg-[#FCFAF7] rounded-2xl p-4 border border-[#E8E2D6] shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#847BA2]"></span>
+              <h3 class="text-xs font-semibold uppercase tracking-wider text-[#756C5E]">Zen Kalimba</h3>
+            </div>
+            <span class="text-[11px] text-[#9A9183] font-mono">Harmonic Tines</span>
+          </div>
+          <p class="text-[11px] text-[#8C8375] mb-2.5">Tap the metallic tines for relaxing bell frequencies</p>
+          <div class="flex justify-between items-end gap-1.5 h-24 px-1 pt-2 bg-[#F3EFE8] rounded-xl border border-[#E2DBD0]">
+            <button data-freq="261.63" data-note="C4" class="kalimba-key flex-1 h-[75%] bg-gradient-to-b from-[#DDD7CB] to-[#C9C2B4] rounded-b-md shadow hover:brightness-105 active:h-[72%] transition-all flex flex-col items-center justify-end pb-1 text-[10px] font-mono text-[#5E574B]">C4</button>
+            <button data-freq="293.66" data-note="D4" class="kalimba-key flex-1 h-[82%] bg-gradient-to-b from-[#DDD7CB] to-[#C9C2B4] rounded-b-md shadow hover:brightness-105 active:h-[79%] transition-all flex flex-col items-center justify-end pb-1 text-[10px] font-mono text-[#5E574B]">D4</button>
+            <button data-freq="329.63" data-note="E4" class="kalimba-key flex-1 h-[90%] bg-gradient-to-b from-[#DDD7CB] to-[#C9C2B4] rounded-b-md shadow hover:brightness-105 active:h-[87%] transition-all flex flex-col items-center justify-end pb-1 text-[10px] font-mono text-[#5E574B]">E4</button>
+            <button data-freq="392.00" data-note="G4" class="kalimba-key flex-1 h-[100%] bg-gradient-to-b from-[#DDD7CB] to-[#C9C2B4] rounded-b-md shadow hover:brightness-105 active:h-[97%] transition-all flex flex-col items-center justify-end pb-1 text-[10px] font-mono text-[#5E574B]">G4</button>
+            <button data-freq="440.00" data-note="A4" class="kalimba-key flex-1 h-[90%] bg-gradient-to-b from-[#DDD7CB] to-[#C9C2B4] rounded-b-md shadow hover:brightness-105 active:h-[87%] transition-all flex flex-col items-center justify-end pb-1 text-[10px] font-mono text-[#5E574B]">A4</button>
+            <button data-freq="523.25" data-note="C5" class="kalimba-key flex-1 h-[82%] bg-gradient-to-b from-[#DDD7CB] to-[#C9C2B4] rounded-b-md shadow hover:brightness-105 active:h-[79%] transition-all flex flex-col items-center justify-end pb-1 text-[10px] font-mono text-[#5E574B]">C5</button>
+            <button data-freq="587.33" data-note="D5" class="kalimba-key flex-1 h-[75%] bg-gradient-to-b from-[#DDD7CB] to-[#C9C2B4] rounded-b-md shadow hover:brightness-105 active:h-[72%] transition-all flex flex-col items-center justify-end pb-1 text-[10px] font-mono text-[#5E574B]">D5</button>
+          </div>
+        </section>
+
+        <!-- Activity 5: Inertia Momentum Spinner -->
+        <section class="bg-[#FCFAF7] rounded-2xl p-4 border border-[#E8E2D6] shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#C9943B]"></span>
+              <h3 class="text-xs font-semibold uppercase tracking-wider text-[#756C5E]">Inertia Spinner</h3>
+            </div>
+            <span id="spinner-rpm" class="text-[11px] text-[#8C8375] font-mono">0 RPM</span>
+          </div>
+          <div class="flex flex-col items-center justify-center py-1">
+            <div id="spinner-container" class="relative w-32 h-32 flex items-center justify-center cursor-grab active:cursor-grabbing touch-none">
+              <div id="spinner-wheel" class="w-28 h-28 rounded-full border-4 border-[#DDD5C7] bg-gradient-to-tr from-[#EFEAE1] via-[#FAF8F5] to-[#EBE4D8] shadow-md flex items-center justify-center relative">
+                <div class="absolute w-2.5 h-2.5 rounded-full bg-[#C8644A] top-2"></div>
+                <div class="absolute w-2.5 h-2.5 rounded-full bg-[#527351] bottom-2"></div>
+                <div class="absolute w-2.5 h-2.5 rounded-full bg-[#847BA2] left-2"></div>
+                <div class="absolute w-2.5 h-2.5 rounded-full bg-[#C9943B] right-2"></div>
+                <div class="w-10 h-10 rounded-full bg-[#252220] text-white flex items-center justify-center shadow-inner">
+                  <i data-lucide="sparkle" class="w-4 h-4 text-[#E5DFD4]"></i>
+                </div>
+              </div>
+            </div>
+            <span class="text-[10px] text-[#A3998A] mt-1.5">Flick to spin with natural angular momentum</span>
+          </div>
+        </section>
+
+        <!-- Activity 6: 4-4-4 Mindful Breath -->
+        <section class="bg-[#FCFAF7] rounded-2xl p-4 border border-[#E8E2D6] shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#4B7E8F]"></span>
+              <h3 class="text-xs font-semibold uppercase tracking-wider text-[#756C5E]">4-4-4 Mindful Breath</h3>
+            </div>
+            <button id="toggle-breathing-btn" class="text-[11px] text-[#4B7E8F] font-semibold hover:underline">Pause</button>
+          </div>
+          <div class="flex flex-col items-center justify-center py-2">
+            <div class="relative w-24 h-24 flex items-center justify-center">
+              <div id="breath-orb" class="absolute w-16 h-16 rounded-full bg-[#E3EBEB] border border-[#B6C8CB] animate-breath"></div>
+              <span id="breath-prompt" class="relative z-10 text-xs font-bold text-[#355057] tracking-wider uppercase">Inhale</span>
+            </div>
+            <p id="breath-counter" class="text-[11px] text-[#7C959C] mt-2 font-mono">1s / 4s</p>
+          </div>
+        </section>
+
+        <!-- Activity 7: Coin Flip & Dice Roller -->
+        <section class="bg-[#FCFAF7] rounded-2xl p-4 border border-[#E8E2D6] shadow-sm space-y-2.5">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#C57585]"></span>
+              <h3 class="text-xs font-semibold uppercase tracking-wider text-[#756C5E]">Decision Fidgets</h3>
+            </div>
+            <span class="text-[10px] text-[#9A9183]">Quick flip & roll</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="coin-toss-btn" class="flex-1 py-2 px-3 bg-[#F4EFE6] hover:bg-[#EDE6DA] border border-[#DDD5C7] rounded-xl flex items-center justify-center gap-2 text-xs font-medium text-[#484236] transition-all active:scale-95">
+              <div id="coin-visual" class="w-5 h-5 rounded-full bg-gradient-to-tr from-[#D19B3E] to-[#FAD480] border border-[#B38029] text-[9px] font-bold text-white flex items-center justify-center shadow-sm">H</div>
+              <span id="coin-text">Flip Coin</span>
+            </button>
+            <button id="dice-roll-btn" class="flex-1 py-2 px-3 bg-[#F4EFE6] hover:bg-[#EDE6DA] border border-[#DDD5C7] rounded-xl flex items-center justify-center gap-2 text-xs font-medium text-[#484236] transition-all active:scale-95">
+              <div id="dice-visual" class="w-5 h-5 rounded bg-white border border-[#D5CDC0] shadow-sm flex items-center justify-center font-bold text-xs text-[#252220]">⚄</div>
+              <span id="dice-text">Roll (5)</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- Contact Section (Dark Card Motif matching reference design) -->
+        <section class="bg-[#0B1321] text-white rounded-2xl p-4 sm:p-5 border border-[#1E293B] shadow-xl relative overflow-hidden">
+          <div class="flex items-center justify-between mb-4 border-b border-[#1E293B] pb-3">
+            <h3 class="text-xs font-bold tracking-[0.25em] text-[#94A3B8] uppercase">CONTACT</h3>
+            <span class="text-[10px] font-mono text-[#38BDF8] bg-[#0284C7]/20 border border-[#0284C7]/30 px-2 py-0.5 rounded-full">NEEL</span>
+          </div>
+
+          <div class="space-y-3 text-xs">
+            <!-- Phone Number Row -->
+            <div class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-[#1E293B]/80 transition-all border border-transparent hover:border-[#334155] group">
+              <div class="w-8 h-8 rounded-lg bg-[#1E293B] flex items-center justify-center text-[#38BDF8] shrink-0">
+                <i data-lucide="phone" class="w-4 h-4"></i>
+              </div>
+              <a href="tel:+919120510520" class="flex-1 min-w-0">
+                <span class="text-[10px] text-[#94A3B8] font-mono block">PHONE NUMBER</span>
+                <span class="font-medium text-sm text-white tracking-wide block truncate">+91 9120510520</span>
+              </a>
+              <button type="button" class="copy-contact-btn text-[#64748B] group-hover:text-white p-1 rounded hover:bg-[#334155] transition-colors" data-copy="+919120510520" title="Copy Number">
+                <i data-lucide="copy" class="w-3.5 h-3.5 pointer-events-none"></i>
+              </button>
+            </div>
+
+            <!-- Gmail ID Row -->
+            <div class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-[#1E293B]/80 transition-all border border-transparent hover:border-[#334155] group">
+              <div class="w-8 h-8 rounded-lg bg-[#1E293B] flex items-center justify-center text-[#F43F5E] shrink-0">
+                <i data-lucide="mail" class="w-4 h-4"></i>
+              </div>
+              <a href="mailto:nnxx33ll@gmail.com" class="flex-1 min-w-0">
+                <span class="text-[10px] text-[#94A3B8] font-mono block">GMAIL ID</span>
+                <span class="font-medium text-sm text-white tracking-wide block truncate">nnxx33ll@gmail.com</span>
+              </a>
+              <button type="button" class="copy-contact-btn text-[#64748B] group-hover:text-white p-1 rounded hover:bg-[#334155] transition-colors" data-copy="nnxx33ll@gmail.com" title="Copy Email">
+                <i data-lucide="copy" class="w-3.5 h-3.5 pointer-events-none"></i>
+              </button>
+            </div>
+
+            <!-- Location Row -->
+            <div class="flex items-center gap-3 p-2.5 rounded-xl bg-[#1E293B]/40 border border-[#1E293B]/60">
+              <div class="w-8 h-8 rounded-lg bg-[#1E293B] flex items-center justify-center text-[#F59E0B] shrink-0">
+                <i data-lucide="map-pin" class="w-4 h-4"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <span class="text-[10px] text-[#94A3B8] font-mono block">LOCATION</span>
+                <p class="font-medium text-sm text-white flex items-center gap-1.5">
+                  <span>Your</span>
+                  <span class="animate-heartbeat text-rose-500 text-base" title="In your heart">❤️</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="text-center py-2 text-[11px] text-[#A89E8F] font-mono">
+          Handcrafted by @neelxz
+        </div>
+
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- Custom Modal Confirmation for Clearing Canvas -->
+  <div id="confirm-modal" class="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-200">
+    <div class="bg-[#FCFAF7] border border-[#E2DBD0] rounded-2xl p-5 max-w-sm w-[90%] shadow-2xl transform scale-95 transition-transform duration-200" id="confirm-modal-box">
+      <div class="flex items-center gap-3 mb-3 text-[#C8644A]">
+        <div class="w-9 h-9 rounded-xl bg-orange-100 flex items-center justify-center">
+          <i data-lucide="alert-circle" class="w-5 h-5"></i>
+        </div>
+        <h4 class="font-bold text-sm text-[#252220]">Clear doodle canvas?</h4>
+      </div>
+      <p class="text-xs text-[#7A7265] leading-relaxed mb-4">
+        This wipes strokes from your page. You can restore the <strong>@neelxz</strong> signature anytime with the signature button.
+      </p>
+      <div class="flex items-center justify-end gap-2">
+        <button id="cancel-clear-btn" class="px-3.5 py-1.5 rounded-xl text-xs font-medium text-[#686053] hover:bg-[#EFE9DF] transition-colors">Cancel</button>
+        <button id="confirm-clear-btn" class="px-4 py-1.5 rounded-xl text-xs font-semibold bg-red-600 text-white hover:bg-red-700 transition-colors shadow-sm">Yes, Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feedback Toast Notification -->
+  <div id="toast" class="fixed top-16 left-1/2 -translate-x-1/2 z-50 bg-[#252220] text-white text-xs px-4 py-2 rounded-full shadow-xl opacity-0 pointer-events-none transition-all duration-300 transform -translate-y-2 flex items-center gap-2">
+    <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
+    <span id="toast-message">Copied to clipboard</span>
+  </div>
+
+  <script>
+    /* --- Web Audio Synthesizer Engine --- */
+    class SoundEngine {
+      constructor() {
+        this.ctx = null;
+        this.muted = false;
+      }
+
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+
+      toggleMute() {
+        this.muted = !this.muted;
+        return !this.muted;
+      }
+
+      playMechSwitch(type) {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const now = this.ctx.currentTime;
+        if (type === 'blue') {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(2200, now);
+          osc.frequency.exponentialRampToValueAtTime(320, now + 0.02);
+          gain.gain.setValueAtTime(0.18, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.025);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.03);
+        } else if (type === 'red') {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(540, now);
+          osc.frequency.exponentialRampToValueAtTime(120, now + 0.03);
+          gain.gain.setValueAtTime(0.14, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.035);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.04);
+        } else {
+          // Thock
+          const osc = this.ctx.createOscillator();
+          const filter = this.ctx.createBiquadFilter();
+          const gain = this.ctx.createGain();
+          osc.type = 'sawtooth';
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(450, now);
+          osc.frequency.setValueAtTime(280, now);
+          osc.frequency.exponentialRampToValueAtTime(90, now + 0.06);
+          gain.gain.setValueAtTime(0.24, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.065);
+          osc.connect(filter);
+          filter.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.07);
+        }
+      }
+
+      playBubblePop() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(550 + Math.random() * 250, now);
+        osc.frequency.exponentialRampToValueAtTime(140, now + 0.05);
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.055);
+      }
+
+      playKalimba(freq) {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, now);
+
+        const overtone = this.ctx.createOscillator();
+        const overtoneGain = this.ctx.createGain();
+        overtone.type = 'sine';
+        overtone.frequency.setValueAtTime(freq * 2.76, now);
+
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
+        overtoneGain.gain.setValueAtTime(0.08, now);
+        overtoneGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.4);
+
+        osc.connect(gain);
+        overtone.connect(overtoneGain);
+        gain.connect(this.ctx.destination);
+        overtoneGain.connect(this.ctx.destination);
+
+        osc.start(now);
+        overtone.start(now);
+        osc.stop(now + 1.25);
+        overtone.stop(now + 0.45);
+      }
+
+      playWaterDrop() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        const startF = 800 + Math.random() * 300;
+        osc.frequency.setValueAtTime(startF, now);
+        osc.frequency.exponentialRampToValueAtTime(startF * 1.6, now + 0.08);
+        gain.gain.setValueAtTime(0.18, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.13);
+      }
+
+      playClick(pitch = 1.0) {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(1800 * pitch, now);
+        osc.frequency.exponentialRampToValueAtTime(350, now + 0.015);
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.018);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.02);
+      }
+
+      playCoinClink() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        [2200, 3400].forEach((freq, idx) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now);
+          gain.gain.setValueAtTime(0.15 / (idx + 1), now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.36);
+        });
+      }
+
+      playDiceRoll() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        for (let i = 0; i < 3; i++) {
+          const delay = i * 0.06;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(120 + Math.random() * 80, now + delay);
+          gain.gain.setValueAtTime(0.2, now + delay);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + delay + 0.04);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now + delay);
+          osc.stop(now + delay + 0.045);
+        }
+      }
+    }
+
+    const sound = new SoundEngine();
+
+    /* --- Canvas & Guaranteed Handwriting Engine --- */
+    const canvas = document.getElementById('doodleCanvas');
+    const ctx = canvas.getContext('2d');
+    const paperContainer = document.getElementById('paper-container');
+
+    let isDrawing = false;
+    let points = [];
+    let currentTool = 'pen';
+    let strokeColor = '#252220';
+    let strokeWidth = 4;
+    let signatureAlreadyDrawn = false;
+
+    const undoStack = [];
+    const redoStack = [];
+    const MAX_HISTORY = 24;
+
+    function saveState() {
+      if (undoStack.length >= MAX_HISTORY) undoStack.shift();
+      undoStack.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
+      redoStack.length = 0;
+      updateHistoryButtons();
+    }
+
+    function updateHistoryButtons() {
+      document.getElementById('undo-btn').disabled = undoStack.length <= 1;
+      document.getElementById('redo-btn').disabled = redoStack.length === 0;
+    }
+
+    /*
+     * Guaranteed Procedural Handwriting for "@neelxz"
+     * This draws genuine cursive calligraphy directly via bezier vector curves,
+     * ensuring "@neelxz" is visibly painted immediately on page load even before
+     * web fonts load or if fonts fail.
+     */
+    function drawGuaranteedSignature() {
+      const rect = paperContainer.getBoundingClientRect();
+      const w = rect.width;
+      const h = rect.height;
+      const dpr = window.devicePixelRatio || 1;
+
+      // Center positioning
+      const cx = (w / 2);
+      const cy = (h / 2) - 15;
+      const scale = Math.min(Math.max(w / 700, 0.65), 1.45);
+
+      ctx.save();
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      // Natural handwriting slant (-3.8 degrees)
+      ctx.translate(cx, cy);
+      ctx.rotate(-0.065);
+      ctx.scale(scale, scale);
+
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.strokeStyle = '#252220';
+      ctx.fillStyle = '#252220';
+
+      // 1. Dual-pass cursive letters: Draw authentic cursive strokes
+      // Vector paths normalized around (0,0)
+      const cursiveStrokes = [
+        // '@' symbol: cursive swirl
+        [
+          { type: 'M', x: -165, y: -5 },
+          { type: 'C', c1x: -165, c1y: 20, c2x: -145, c2y: 25, x: -130, y: 15 },
+          { type: 'C', c1x: -120, c1y: 5, c2x: -120, c2y: -25, x: -135, y: -30 },
+          { type: 'C', c1x: -155, c1y: -35, c2x: -165, c2y: -15, x: -165, y: -5 },
+          { type: 'C', c1x: -165, c1y: -50, c2x: -110, c2y: -55, x: -95, y: -25 },
+          { type: 'C', c1x: -85, c1y: -5, c2x: -95, c2y: 35, x: -125, y: 40 },
+          { type: 'C', c1x: -155, c1y: 45, c2x: -185, c2y: 20, x: -180, y: -15 }
+        ],
+        // 'n'
+        [
+          { type: 'M', x: -80, y: 5 },
+          { type: 'C', c1x: -80, c1y: -15, c2x: -75, c2y: -20, x: -65, y: -20 },
+          { type: 'C', c1x: -55, c1y: -20, c2x: -50, c2y: -5, x: -50, y: 15 },
+          { type: 'M', x: -52, y: -5 },
+          { type: 'C', c1x: -45, c1y: -20, c2x: -35, c2y: -20, x: -28, y: -18 },
+          { type: 'C', c1x: -20, c1y: -15, c2x: -20, c2y: 0, x: -20, y: 16 }
+        ],
+        // 'e' (loop)
+        [
+          { type: 'M', x: -20, y: 16 },
+          { type: 'C', c1x: -15, c1y: 20, c2x: -10, c2y: 10, x: -5, y: -2 },
+          { type: 'C', c1x: 0, c1y: -14, c2x: 10, c2y: -18, x: 15, y: -18 },
+          { type: 'C', c1x: 20, c1y: -18, c2x: 22, c2y: -5, x: 12, y: 2 },
+          { type: 'C', c1x: 2, c1y: 9, c2x: 2, c2y: 18, x: 18, y: 18 }
+        ],
+        // second 'e' (loop)
+        [
+          { type: 'M', x: 18, y: 18 },
+          { type: 'C', c1x: 24, c1y: 18, c2x: 28, c2y: 10, x: 34, y: -2 },
+          { type: 'C', c1x: 39, c1y: -14, c2x: 48, c2y: -18, x: 53, y: -18 },
+          { type: 'C', c1x: 58, c1y: -18, c2x: 60, c2y: -5, x: 50, y: 2 },
+          { type: 'C', c1x: 40, c1y: 9, c2x: 42, c2y: 18, x: 56, y: 18 }
+        ],
+        // 'l' (tall cursive loop)
+        [
+          { type: 'M', x: 56, y: 18 },
+          { type: 'C', c1x: 64, c1y: 18, c2x: 70, c2y: -10, x: 74, y: -45 },
+          { type: 'C', c1x: 77, c1y: -65, c2x: 88, c2y: -65, x: 88, y: -45 },
+          { type: 'C', c1x: 88, c1y: -20, c2x: 84, c2y: 0, x: 86, y: 18 },
+          { type: 'C', c1x: 87, c1y: 20, c2x: 94, c2y: 18, x: 100, y: 14 }
+        ],
+        // 'x'
+        [
+          { type: 'M', x: 102, y: -18 },
+          { type: 'C', c1x: 108, c1y: -10, c2x: 120, c2y: 8, x: 128, y: 18 },
+          { type: 'M', x: 128, y: -18 },
+          { type: 'C', c1x: 122, c1y: -8, c2x: 110, c2y: 8, x: 104, y: 18 }
+        ],
+        // 'z' with cursive descender tail
+        [
+          { type: 'M', x: 134, y: -18 },
+          { type: 'C', c1x: 144, c1y: -20, c2x: 154, c2y: -18, x: 154, y: -10 },
+          { type: 'C', c1x: 154, c1y: -2, c2x: 140, c2y: -1, x: 136, y: 4 },
+          { type: 'C', c1x: 132, c1y: 8, c2x: 148, c2y: 10, x: 152, y: 16 },
+          { type: 'C', c1x: 156, c1y: 22, c2x: 148, c2y: 45, x: 138, y: 42 },
+          { type: 'C', c1x: 130, c1y: 39, c2x: 134, c2y: 22, x: 155, y: 14 }
+        ],
+        // Underline Flourish
+        [
+          { type: 'M', x: -175, y: 50 },
+          { type: 'C', c1x: -90, c1y: 62, c2x: 50, c2y: 35, x: 165, y: 48 },
+          { type: 'C', c1x: 175, c1y: 50, c2x: 185, c2y: 44, x: 178, y: 40 }
+        ]
+      ];
+
+      // Draw handwriting strokes with natural calligraphic ink line thickness
+      cursiveStrokes.forEach((stroke, sIndex) => {
+        ctx.beginPath();
+        const baseWidth = (sIndex === cursiveStrokes.length - 1) ? 3.5 : 4.2;
+        ctx.lineWidth = baseWidth;
+
+        stroke.forEach((pt) => {
+          if (pt.type === 'M') {
+            ctx.moveTo(pt.x, pt.y);
+          } else if (pt.type === 'C') {
+            ctx.bezierCurveTo(pt.c1x, pt.c1y, pt.c2x, pt.c2y, pt.x, pt.y);
+          }
+        });
+        ctx.stroke();
+      });
+
+      // End flourish ink star
+      ctx.beginPath();
+      ctx.lineWidth = 2.2;
+      ctx.moveTo(186, 38); ctx.lineTo(194, 46);
+      ctx.moveTo(194, 38); ctx.lineTo(186, 46);
+      ctx.stroke();
+
+      // Secondary font text reinforcement (enhances character shapes if webfont is ready)
+      if (document.fonts && document.fonts.check('12px Caveat')) {
+        ctx.font = '700 76px "Caveat", cursive';
+        ctx.fillText('@neelxz', -165, 12);
+      }
+
+      ctx.restore();
+      saveState();
+      signatureAlreadyDrawn = true;
+    }
+
+    function resizeCanvas() {
+      const rect = paperContainer.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+
+      // Keep existing drawing content if already drawn
+      let tempBuffer = null;
+      if (canvas.width > 0 && canvas.height > 0 && signatureAlreadyDrawn) {
+        tempBuffer = document.createElement('canvas');
+        tempBuffer.width = canvas.width;
+        tempBuffer.height = canvas.height;
+        tempBuffer.getContext('2d').drawImage(canvas, 0, 0);
+      }
+
+      canvas.width = Math.floor(rect.width * dpr);
+      canvas.height = Math.floor(rect.height * dpr);
+
+      if (tempBuffer) {
+        ctx.drawImage(tempBuffer, 0, 0);
+      } else {
+        drawGuaranteedSignature();
+      }
+    }
+
+    function getPointerPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return {
+        x: clientX - rect.left,
+        y: clientY - rect.top
+      };
+    }
+
+    function applyBrushStyle() {
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      if (currentTool === 'eraser') {
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.strokeStyle = 'rgba(0,0,0,1)';
+        ctx.fillStyle = 'rgba(0,0,0,1)';
+        ctx.lineWidth = strokeWidth * 3.5;
+      } else if (currentTool === 'highlighter') {
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.globalAlpha = 0.32;
+        ctx.strokeStyle = strokeColor;
+        ctx.fillStyle = strokeColor;
+        ctx.lineWidth = strokeWidth * 3.8;
+      } else {
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.globalAlpha = 1.0;
+        ctx.strokeStyle = strokeColor;
+        ctx.fillStyle = strokeColor;
+        ctx.lineWidth = strokeWidth;
+      }
+    }
+
+    function startStroke(e) {
+      if (e.target !== canvas) return;
+      sound.init();
+      isDrawing = true;
+      points = [];
+      const dpr = window.devicePixelRatio || 1;
+      const rawPos = getPointerPos(e);
+      const pos = { x: rawPos.x * dpr, y: rawPos.y * dpr };
+      points.push(pos);
+      points.push(pos);
+
+      ctx.save();
+      applyBrushStyle();
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, ((currentTool === 'highlighter' ? strokeWidth * 2 : strokeWidth) * dpr) / 2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function moveStroke(e) {
+      if (!isDrawing) return;
+      e.preventDefault();
+      const dpr = window.devicePixelRatio || 1;
+      const rawPos = getPointerPos(e);
+      const pos = { x: rawPos.x * dpr, y: rawPos.y * dpr };
+      points.push(pos);
+
+      ctx.save();
+      applyBrushStyle();
+      ctx.beginPath();
+
+      const p1 = points[points.length - 2];
+      const p2 = points[points.length - 1];
+      const midPoint = {
+        x: p1.x + (p2.x - p1.x) / 2,
+        y: p1.y + (p2.y - p1.y) / 2
+      };
+
+      if (points.length === 3) {
+        ctx.moveTo(points[0].x, points[0].y);
+        ctx.lineTo(midPoint.x, midPoint.y);
+      } else {
+        const prevMid = {
+          x: points[points.length - 3].x + (p1.x - points[points.length - 3].x) / 2,
+          y: points[points.length - 3].y + (p1.y - points[points.length - 3].y) / 2
+        };
+        ctx.moveTo(prevMid.x, prevMid.y);
+        ctx.quadraticCurveTo(p1.x, p1.y, midPoint.x, midPoint.y);
+      }
+
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function endStroke() {
+      if (!isDrawing) return;
+      isDrawing = false;
+      points = [];
+      saveState();
+    }
+
+    canvas.addEventListener('mousedown', startStroke);
+    window.addEventListener('mousemove', moveStroke);
+    window.addEventListener('mouseup', endStroke);
+
+    canvas.addEventListener('touchstart', startStroke, { passive: false });
+    window.addEventListener('touchmove', moveStroke, { passive: false });
+    window.addEventListener('touchend', endStroke);
+    window.addEventListener('touchcancel', endStroke);
+
+    // Color Swatches
+    const swatchButtons = document.querySelectorAll('.swatch-btn');
+    swatchButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const color = btn.getAttribute('data-color');
+        setColor(color);
+        sound.playClick(1.2);
+      });
+    });
+
+    const customPicker = document.getElementById('customColorPicker');
+    const customThumb = document.getElementById('customColorThumb');
+    customPicker.addEventListener('input', (e) => {
+      setColor(e.target.value);
+      customThumb.style.backgroundColor = e.target.value;
+    });
+
+    function setColor(color) {
+      strokeColor = color;
+      if (currentTool === 'eraser') setTool('pen');
+      swatchButtons.forEach(b => {
+        if (b.getAttribute('data-color') === color) {
+          b.classList.add('ring-2', 'ring-[#252220]');
+        } else {
+          b.classList.remove('ring-2', 'ring-[#252220]');
+        }
+      });
+      updateBrushPreview();
+    }
+
+    // Tools
+    const toolButtons = {
+      pen: document.getElementById('tool-pen'),
+      highlighter: document.getElementById('tool-highlighter'),
+      eraser: document.getElementById('tool-eraser')
+    };
+
+    Object.keys(toolButtons).forEach(tool => {
+      toolButtons[tool].addEventListener('click', () => {
+        setTool(tool);
+        sound.playClick(1.0);
+      });
+    });
+
+    function setTool(tool) {
+      currentTool = tool;
+      Object.keys(toolButtons).forEach(t => {
+        if (t === tool) {
+          toolButtons[t].classList.add('active', 'bg-[#252220]', 'text-white');
+          toolButtons[t].classList.remove('text-[#6D6558]');
+        } else {
+          toolButtons[t].classList.remove('active', 'bg-[#252220]', 'text-white');
+          toolButtons[t].classList.add('text-[#6D6558]');
+        }
+      });
+      updateBrushPreview();
+    }
+
+    // Brush slider
+    const brushSlider = document.getElementById('brushSize');
+    const brushPreview = document.getElementById('brush-size-preview');
+    brushSlider.addEventListener('input', (e) => {
+      strokeWidth = parseInt(e.target.value, 10);
+      updateBrushPreview();
+    });
+
+    function updateBrushPreview() {
+      const displaySize = Math.min(Math.max(strokeWidth, 3), 18);
+      brushPreview.style.width = `${displaySize}px`;
+      brushPreview.style.height = `${displaySize}px`;
+      brushPreview.style.backgroundColor = currentTool === 'eraser' ? '#C8644A' : strokeColor;
+      brushPreview.style.opacity = currentTool === 'highlighter' ? '0.45' : '1.0';
+    }
+
+    // Paper Patterns
+    const textureLayer = document.getElementById('paper-texture-layer');
+    const textureToggleBtn = document.getElementById('paper-texture-toggle');
+    const textureDropdown = document.getElementById('paper-dropdown');
+    const textureOptions = document.querySelectorAll('.paper-opt-btn');
+
+    textureToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      textureDropdown.classList.toggle('hidden');
+      sound.playClick(1.1);
+    });
+
+    document.addEventListener('click', () => textureDropdown.classList.add('hidden'));
+
+    textureOptions.forEach(opt => {
+      opt.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const texture = opt.getAttribute('data-texture');
+        setPaperTexture(texture);
+        textureDropdown.classList.add('hidden');
+        sound.playClick(1.3);
+      });
+    });
+
+    function setPaperTexture(type) {
+      textureLayer.className = 'absolute inset-0 pointer-events-none transition-opacity duration-300';
+      textureOptions.forEach(opt => {
+        if (opt.getAttribute('data-texture') === type) {
+          opt.classList.add('active', 'text-[#252220]');
+          opt.classList.remove('text-[#686053]');
+        } else {
+          opt.classList.remove('active', 'text-[#252220]');
+          opt.classList.add('text-[#686053]');
+        }
+      });
+
+      if (type === 'dots') textureLayer.classList.add('paper-pattern-dots', 'opacity-75');
+      else if (type === 'lines') textureLayer.classList.add('paper-pattern-lines', 'opacity-85');
+      else if (type === 'grid') textureLayer.classList.add('paper-pattern-grid', 'opacity-80');
+      else textureLayer.classList.add('opacity-0');
+
+      showToast(`Paper: ${type.charAt(0).toUpperCase() + type.slice(1)}`);
+    }
+
+    // Undo / Redo
+    document.getElementById('undo-btn').addEventListener('click', () => {
+      if (undoStack.length > 1) {
+        const popped = undoStack.pop();
+        redoStack.push(popped);
+        const previousState = undoStack[undoStack.length - 1];
+        ctx.putImageData(previousState, 0, 0);
+        updateHistoryButtons();
+        sound.playClick(0.9);
+      }
+    });
+
+    document.getElementById('redo-btn').addEventListener('click', () => {
+      if (redoStack.length > 0) {
+        const nextState = redoStack.pop();
+        undoStack.push(nextState);
+        ctx.putImageData(nextState, 0, 0);
+        updateHistoryButtons();
+        sound.playClick(1.1);
+      }
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') {
+        if (e.shiftKey) document.getElementById('redo-btn').click();
+        else document.getElementById('undo-btn').click();
+      } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'y') {
+        document.getElementById('redo-btn').click();
+      }
+    });
+
+    // Explicit Button: Write/Restore @neelxz
+    document.getElementById('restore-signature-btn').addEventListener('click', () => {
+      drawGuaranteedSignature();
+      sound.playClick(1.2);
+      showToast("Handwritten '@neelxz' written!");
+    });
+
+    // Custom Modal Clear Canvas Dialog
+    const clearBtn = document.getElementById('clear-canvas-btn');
+    const modal = document.getElementById('confirm-modal');
+    const modalBox = document.getElementById('confirm-modal-box');
+    const cancelClearBtn = document.getElementById('cancel-clear-btn');
+    const confirmClearBtn = document.getElementById('confirm-clear-btn');
+
+    clearBtn.addEventListener('click', () => {
+      sound.playClick(0.9);
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      modalBox.classList.remove('scale-95');
+    });
+
+    function closeConfirmModal() {
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      modalBox.classList.add('scale-95');
+    }
+
+    cancelClearBtn.addEventListener('click', closeConfirmModal);
+
+    confirmClearBtn.addEventListener('click', () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      saveState();
+      closeConfirmModal();
+      sound.playClick(0.8);
+      showToast("Canvas cleared");
+    });
+
+    // Download / Export Drawing
+    document.getElementById('download-btn').addEventListener('click', () => {
+      sound.playClick(1.4);
+      const exportCanvas = document.createElement('canvas');
+      exportCanvas.width = canvas.width;
+      exportCanvas.height = canvas.height;
+      const expCtx = exportCanvas.getContext('2d');
+
+      expCtx.fillStyle = '#FCFAF7';
+      expCtx.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
+      expCtx.drawImage(canvas, 0, 0);
+
+      expCtx.font = '24px "Caveat", cursive, sans-serif';
+      expCtx.fillStyle = '#A3998A';
+      expCtx.fillText('NEEL · @neelxz', 40, exportCanvas.height - 30);
+
+      const link = document.createElement('a');
+      link.download = `NEEL-Doodle-${Date.now()}.png`;
+      link.href = exportCanvas.toDataURL('image/png');
+      link.click();
+      showToast("Doodle exported to PNG");
+    });
+
+    /* --- Activity 1: Zen Water Ripple Pond Physics --- */
+    const rCanvas = document.getElementById('rippleCanvas');
+    const rCtx = rCanvas ? rCanvas.getContext('2d') : null;
+    let ripples = [];
+
+    function initRippleCanvas() {
+      if (!rCanvas || !rCtx) return;
+      const rect = rCanvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      rCanvas.width = rect.width * dpr;
+      rCanvas.height = rect.height * dpr;
+      rCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function addRipple(x, y) {
+      ripples.push({
+        x,
+        y,
+        radius: 4,
+        maxRadius: 75,
+        alpha: 0.8,
+        speed: 2.2
+      });
+      sound.playWaterDrop();
+    }
+
+    function drawRipples() {
+      if (!rCanvas || !rCtx) return;
+      const rect = rCanvas.getBoundingClientRect();
+      rCtx.clearRect(0, 0, rect.width, rect.height);
+
+      const bgGrad = rCtx.createLinearGradient(0, 0, 0, rect.height);
+      bgGrad.addColorStop(0, '#E8F0F3');
+      bgGrad.addColorStop(1, '#D8E5E9');
+      rCtx.fillStyle = bgGrad;
+      rCtx.fillRect(0, 0, rect.width, rect.height);
+
+      for (let i = ripples.length - 1; i >= 0; i--) {
+        const r = ripples[i];
+        r.radius += r.speed;
+        r.alpha -= 0.016;
+
+        if (r.alpha <= 0 || r.radius >= r.maxRadius) {
+          ripples.splice(i, 1);
+          continue;
+        }
+
+        rCtx.beginPath();
+        rCtx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
+        rCtx.strokeStyle = `rgba(75, 126, 143, ${r.alpha})`;
+        rCtx.lineWidth = 2.0;
+        rCtx.stroke();
+
+        if (r.radius > 16) {
+          rCtx.beginPath();
+          rCtx.arc(r.x, r.y, r.radius - 12, 0, Math.PI * 2);
+          rCtx.strokeStyle = `rgba(120, 168, 185, ${r.alpha * 0.6})`;
+          rCtx.lineWidth = 1.2;
+          rCtx.stroke();
+        }
+      }
+      requestAnimationFrame(drawRipples);
+    }
+
+    if (rCanvas) {
+      function triggerPondEvent(e) {
+        const rect = rCanvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        addRipple(clientX - rect.left, clientY - rect.top);
+      }
+      rCanvas.addEventListener('mousedown', triggerPondEvent);
+      rCanvas.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        triggerPondEvent(e);
+      }, { passive: false });
+    }
+
+    /* --- Activity 2: Mechanical Switches --- */
+    const mechButtons = document.querySelectorAll('.mech-switch-btn');
+    const clicksCounterEl = document.getElementById('clicks-counter');
+    let totalClacks = 0;
+
+    mechButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const type = btn.getAttribute('data-switch');
+        sound.playMechSwitch(type);
+        totalClacks++;
+        clicksCounterEl.textContent = `${totalClacks} clacks`;
+      });
+    });
+
+    /* --- Activity 3: Bubble Wrap Grid --- */
+    const bubbleGrid = document.getElementById('bubble-wrap-grid');
+    const bubbleCountEl = document.getElementById('bubble-count');
+    let poppedCount = 0;
+
+    function buildBubbleWrap() {
+      bubbleGrid.innerHTML = '';
+      poppedCount = 0;
+      bubbleCountEl.textContent = '0';
+
+      for (let i = 0; i < 20; i++) {
+        const bubble = document.createElement('button');
+        bubble.className = 'bubble-btn aspect-square rounded-full bg-gradient-to-tr from-[#E6E0D3] via-[#FAF8F5] to-[#EFE8DC] border border-[#DDD5C7] shadow-sm flex items-center justify-center cursor-pointer hover:brightness-105 active:scale-90 relative';
+        
+        const shine = document.createElement('div');
+        shine.className = 'w-1.5 h-1.5 rounded-full bg-white/70 absolute top-1.5 left-2 pointer-events-none';
+        bubble.appendChild(shine);
+
+        bubble.addEventListener('click', () => {
+          if (!bubble.classList.contains('popped')) {
+            bubble.classList.add('popped');
+            shine.classList.add('opacity-0');
+            poppedCount++;
+            bubbleCountEl.textContent = poppedCount;
+            sound.playBubblePop();
+          }
+        });
+        bubbleGrid.appendChild(bubble);
+      }
+    }
+
+    document.getElementById('reset-bubbles-btn').addEventListener('click', () => {
+      buildBubbleWrap();
+      sound.playClick(1.2);
+    });
+
+    /* --- Activity 4: Zen Kalimba Keys --- */
+    const kalimbaKeys = document.querySelectorAll('.kalimba-key');
+    kalimbaKeys.forEach(key => {
+      key.addEventListener('click', () => {
+        const freq = parseFloat(key.getAttribute('data-freq'));
+        sound.playKalimba(freq);
+      });
+    });
+
+    /* --- Activity 5: Inertia Spinner --- */
+    const spinnerWheel = document.getElementById('spinner-wheel');
+    const spinnerContainer = document.getElementById('spinner-container');
+    const spinnerRpm = document.getElementById('spinner-rpm');
+
+    let currentAngle = 0;
+    let angularVelocity = 0;
+    let isDraggingSpinner = false;
+    let lastDragAngle = 0;
+    let lastDragTime = 0;
+
+    function getAngleFromCenter(e) {
+      const rect = spinnerContainer.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return Math.atan2(clientY - centerY, clientX - centerX);
+    }
+
+    function onSpinnerDown(e) {
+      isDraggingSpinner = true;
+      lastDragAngle = getAngleFromCenter(e);
+      lastDragTime = performance.now();
+      angularVelocity = 0;
+    }
+
+    function onSpinnerMove(e) {
+      if (!isDraggingSpinner) return;
+      const angle = getAngleFromCenter(e);
+      const now = performance.now();
+      const dt = (now - lastDragTime) / 1000;
+      let deltaAngle = angle - lastDragAngle;
+
+      if (deltaAngle > Math.PI) deltaAngle -= Math.PI * 2;
+      if (deltaAngle < -Math.PI) deltaAngle += Math.PI * 2;
+
+      currentAngle += deltaAngle;
+      if (dt > 0.005) angularVelocity = deltaAngle / dt;
+
+      lastDragAngle = angle;
+      lastDragTime = now;
+      spinnerWheel.style.transform = `rotate(${currentAngle}rad)`;
+    }
+
+    function onSpinnerUp() { isDraggingSpinner = false; }
+
+    spinnerContainer.addEventListener('mousedown', onSpinnerDown);
+    window.addEventListener('mousemove', onSpinnerMove);
+    window.addEventListener('mouseup', onSpinnerUp);
+
+    spinnerContainer.addEventListener('touchstart', onSpinnerDown, { passive: true });
+    window.addEventListener('touchmove', onSpinnerMove, { passive: true });
+    window.addEventListener('touchend', onSpinnerUp);
+
+    function updateSpinnerPhysics() {
+      if (!isDraggingSpinner) {
+        currentAngle += angularVelocity * 0.016;
+        angularVelocity *= 0.985;
+        if (Math.abs(angularVelocity) < 0.01) angularVelocity = 0;
+        spinnerWheel.style.transform = `rotate(${currentAngle}rad)`;
+      }
+      const rpm = Math.round(Math.abs(angularVelocity) * (60 / (2 * Math.PI)));
+      spinnerRpm.textContent = `${rpm} RPM`;
+      requestAnimationFrame(updateSpinnerPhysics);
+    }
+
+    /* --- Activity 6: 4-4-4 Breathing Cycle --- */
+    const breathOrb = document.getElementById('breath-orb');
+    const breathPrompt = document.getElementById('breath-prompt');
+    const breathCounter = document.getElementById('breath-counter');
+    const toggleBreathBtn = document.getElementById('toggle-breathing-btn');
+
+    let breathTimer = 0;
+    let breathInterval = null;
+    let isBreathingActive = true;
+
+    function startBreathingGuide() {
+      breathInterval = setInterval(() => {
+        breathTimer = (breathTimer + 1) % 12;
+        if (breathTimer < 4) {
+          breathPrompt.textContent = 'Inhale';
+          breathCounter.textContent = `${breathTimer + 1}s / 4s`;
+        } else if (breathTimer < 8) {
+          breathPrompt.textContent = 'Hold';
+          breathCounter.textContent = `${(breathTimer - 4) + 1}s / 4s`;
+        } else {
+          breathPrompt.textContent = 'Exhale';
+          breathCounter.textContent = `${(breathTimer - 8) + 1}s / 4s`;
+        }
+      }, 1000);
+    }
+
+    toggleBreathBtn.addEventListener('click', () => {
+      isBreathingActive = !isBreathingActive;
+      if (isBreathingActive) {
+        breathOrb.classList.add('animate-breath');
+        startBreathingGuide();
+        toggleBreathBtn.textContent = 'Pause';
+      } else {
+        breathOrb.classList.remove('animate-breath');
+        clearInterval(breathInterval);
+        breathPrompt.textContent = 'Rest';
+        breathCounter.textContent = 'Paused';
+        toggleBreathBtn.textContent = 'Resume';
+      }
+      sound.playClick(1.0);
+    });
+
+    /* --- Activity 7: Coin Flip & Dice Roller --- */
+    const coinBtn = document.getElementById('coin-toss-btn');
+    const coinVisual = document.getElementById('coin-visual');
+    const coinText = document.getElementById('coin-text');
+    let coinFlipping = false;
+
+    coinBtn.addEventListener('click', () => {
+      if (coinFlipping) return;
+      coinFlipping = true;
+      sound.playCoinClink();
+      coinVisual.classList.add('animate-spin');
+      coinText.textContent = 'Flipping...';
+
+      setTimeout(() => {
+        coinVisual.classList.remove('animate-spin');
+        const isHeads = Math.random() > 0.5;
+        coinVisual.textContent = isHeads ? 'H' : 'T';
+        coinText.textContent = isHeads ? 'Heads' : 'Tails';
+        coinFlipping = false;
+      }, 500);
+    });
+
+    const diceBtn = document.getElementById('dice-roll-btn');
+    const diceVisual = document.getElementById('dice-visual');
+    const diceText = document.getElementById('dice-text');
+    const diceGlyphs = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+
+    diceBtn.addEventListener('click', () => {
+      sound.playDiceRoll();
+      diceVisual.classList.add('animate-bounce');
+      setTimeout(() => {
+        diceVisual.classList.remove('animate-bounce');
+        const roll = Math.floor(Math.random() * 6);
+        diceVisual.textContent = diceGlyphs[roll];
+        diceText.textContent = `Roll (${roll + 1})`;
+      }, 350);
+    });
+
+    /* --- Contact Details Copy Handler --- */
+    const copyButtons = document.querySelectorAll('.copy-contact-btn');
+    copyButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const textToCopy = btn.getAttribute('data-copy');
+        
+        const tempInput = document.createElement('textarea');
+        tempInput.value = textToCopy;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        try {
+          document.execCommand('copy');
+          showToast(`Copied: ${textToCopy}`);
+          sound.playClick(1.4);
+        } catch (err) {
+          showToast("Failed to copy");
+        }
+        document.body.removeChild(tempInput);
+      });
+    });
+
+    /* --- Sidebar & Master Audio Controls --- */
+    const sidebar = document.getElementById('zen-sidebar');
+    const toggleSidebarBtn = document.getElementById('toggle-sidebar-btn');
+    const closeSidebarBtn = document.getElementById('close-sidebar-btn');
+
+    toggleSidebarBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('translate-x-full');
+      sound.playClick(1.1);
+    });
+
+    closeSidebarBtn.addEventListener('click', () => {
+      sidebar.classList.add('translate-x-full');
+      sound.playClick(0.9);
+    });
+
+    const toggleAudioBtn = document.getElementById('toggle-audio-btn');
+    const audioLabel = document.getElementById('audio-label');
+    const audioIcon = document.getElementById('audio-icon');
+
+    toggleAudioBtn.addEventListener('click', () => {
+      const isUnmuted = sound.toggleMute();
+      if (isUnmuted) {
+        audioLabel.textContent = 'Sound On';
+        audioIcon.setAttribute('data-lucide', 'volume-2');
+        showToast("Sound unmuted");
+      } else {
+        audioLabel.textContent = 'Muted';
+        audioIcon.setAttribute('data-lucide', 'volume-x');
+        showToast("Sound muted");
+      }
+      lucide.createIcons();
+    });
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-message');
+      toastMsg.textContent = msg;
+      toast.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-2');
+      clearTimeout(window.toastTimer);
+      window.toastTimer = setTimeout(() => {
+        toast.classList.add('opacity-0', 'pointer-events-none', '-translate-y-2');
+      }, 2200);
+    }
+
+    /* --- Application Initialization --- */
+    function initializeApp() {
+      resizeCanvas();
+      initRippleCanvas();
+      drawRipples();
+      buildBubbleWrap();
+      startBreathingGuide();
+      requestAnimationFrame(updateSpinnerPhysics);
+      lucide.createIcons();
+    }
+
+    window.addEventListener('load', () => {
+      if (document.fonts) {
+        document.fonts.ready.then(initializeApp).catch(initializeApp);
+      } else {
+        initializeApp();
+      }
+    });
+
+    let resizeDebounce;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeDebounce);
+      resizeDebounce = setTimeout(() => {
+        resizeCanvas();
+        initRippleCanvas();
+      }, 150);
+    });
+  </script>
+</body>
+</html>
